@@ -1,0 +1,32 @@
+﻿@model PRHawkSkf.Domain.ViewModels.GhUserReposDisplayVm
+
+@{
+    ViewBag.Title = $"Public Repository(s) of GitHub user: {@Model.GitHubUsername}";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<table class="table">
+	<tr>
+		<th>
+			Repository Name
+		</th>
+		<th>
+			Number of open Pull Requests
+		</th>
+	</tr>
+
+	@foreach (var item in Model.Repositories) {
+		<tr>
+			<td>
+				@Html.Raw(item.name)
+			</td>
+			<td>
+				@Html.DisplayFor(modelItem => item.num_pull_reqs)
+			</td>
+		</tr>
+	}
+
+</table>
+
+

@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{4D429941-6658-42C9-833C-15BA69990E15}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>PRHawkSkf.Services</RootNamespace>
+    <AssemblyName>PRHawkSkf.Services</AssemblyName>
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Base64Codec.cs" />
+    <Compile Include="GhUserReposServices.cs" />
+    <Compile Include="GitHubApiCallServices.cs" />
+    <Compile Include="HttpClientAuthorizeConfigurator.cs" />
+    <Compile Include="HttpClientProvider.cs" />
+    <Compile Include="IBase64Codec.cs" />
+    <Compile Include="IGhUserReposServices.cs" />
+    <Compile Include="IGitHubApiCallServices.cs" />
+    <Compile Include="IHttpClientAuthorizeConfigurator.cs" />
+    <Compile Include="IHttpClientProvider.cs" />
+    <Compile Include="IWebConfigReader.cs" />
+    <Compile Include="WebConfigReader.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\PRHawkSkf.Domain\PRHawkSkf.Domain.csproj">
+      <Project>{8f2a5dc8-fe4e-4b88-874d-0a58e30b95b0}</Project>
+      <Name>PRHawkSkf.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PRHawkSkf.GitHubApiRepoInterfaces\PRHawkSkf.GitHubApiRepoInterfaces.csproj">
+      <Project>{6d103ec6-b1ca-4883-916d-0993c133035c}</Project>
+      <Name>PRHawkSkf.GitHubApiRepoInterfaces</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

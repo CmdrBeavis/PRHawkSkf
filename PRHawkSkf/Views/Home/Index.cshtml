@@ -1,0 +1,38 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="jumbotron">
+    <h1>PRHawk SKF</h1>
+    <p class="lead">PRHawk SKF is my take on the ServiceNow 'take home coding test' Web application.</p>
+	<p>
+		You can either navigate directly to: <span>http</span><span>://</span>localhost:<span>59041/</span>user/<span>&lt;GitHubUsername&gt;</span> or
+		enter a GitHub username below and click Go.
+	</p>
+	
+	@using (Html.BeginForm("Index", "User", null, FormMethod.Post, new {@id = "getChUsername", @class = "form-horizontal", role = "form"}))
+	{
+		@Html.AntiForgeryToken()
+
+		<div>
+			<input type="text" id="githubUsername" name="githubUsername" placeholder="GitHub username here"/>
+			<input type="submit" class="btn btn-primary" value="Go"/>
+		</div>
+	}
+
+</div>
+
+<div class="row">
+	<div class="col-md-4">
+		<h3>Found repositories go here. Or do they?</h3>
+		<p>probably not. Will want to go to the User's Repo page kinda thing.</p>
+	</div>
+</div>
+
+@section Scripts {
+	@Scripts.Render("~/bundles/jqueryval")
+
+	@*<script src="~/Scripts/js/cellModemDetailsPage_Index.js"></script>*@
+}
+
+
