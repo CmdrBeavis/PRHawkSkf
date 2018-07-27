@@ -123,14 +123,14 @@ namespace PRHawkSkf.Services
 			// Get the HttpClient
 			var httpClient = _httpClientProvider.GetHttpClientInstance();
 
-			// Set the Authentication stuff into said HttpClient instance
+			// Set the Authentication stuff into HttpClient instance
 			// TODO: (?) read the u/p from the web.config
 			if (!_httpClientAuthPrvdr.AddBasicAuthorizationHeaderValue(
 				httpClient,
 				"snkirklandinterview",
 				"99036c318413ae379983014b2eeae395b7be14b0"))
 			{
-				throw new Exception("Error creating HttpClient instance.");
+				throw new Exception("Error adding authentication credentials to HttpClient instance.");
 			}
 
 			try

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 
 using PRHawkSkf.Domain.Models;
 using PRHawkSkf.Domain.ViewModels;
@@ -8,9 +9,9 @@ namespace PRHawkSkf.Services
 {
 	public interface IGhUserReposServices
 	{
-		GhUserReposDisplayVm HydrateGhUserReposDisplayVm(
+		Task<GhUserReposDisplayVm> HydrateGhUserReposDisplayVm(
 			string ghUsername,
-			List<GhUserRepo> repoList,
+			//List<GhUserRepo> repoList,
 			bool returnPrivateRepos = false);
 	}
 }

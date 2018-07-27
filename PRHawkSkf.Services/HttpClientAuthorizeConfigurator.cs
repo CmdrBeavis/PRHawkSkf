@@ -72,6 +72,8 @@ namespace PRHawkSkf.Services
 			{
 				var encodedAuthParameter = _base64Codec.Encode(userName + ":" + password);
 
+				// TODO: (?) I COULD check to see if the header value has already been added.
+
 				// add our Auth Token to the Header
 				clientToUpdate.DefaultRequestHeaders.Authorization =
 					new AuthenticationHeaderValue("Basic", encodedAuthParameter);
