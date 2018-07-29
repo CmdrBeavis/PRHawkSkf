@@ -42,7 +42,6 @@ namespace PRHawkSkf.GitHubApiRepo
 
 				HttpResponseMessage response = await httpClient.GetAsync(callUrl).ConfigureAwait(false);
 
-				// Check response.statuscode   (ie. statuscode = 404 if card number not found | 200 == OK)
 				if (response.IsSuccessStatusCode && (response.StatusCode == HttpStatusCode.OK))
 				{
 					var data = await response.Content.ReadAsStringAsync();

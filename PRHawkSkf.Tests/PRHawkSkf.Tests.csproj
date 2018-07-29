@@ -118,6 +118,10 @@
       <Project>{8f2a5dc8-fe4e-4b88-874d-0a58e30b95b0}</Project>
       <Name>PRHawkSkf.Domain</Name>
     </ProjectReference>
+    <ProjectReference Include="..\PRHawkSkf.GitHubApiRepoInterfaces\PRHawkSkf.GitHubApiRepoInterfaces.csproj">
+      <Project>{6d103ec6-b1ca-4883-916d-0993c133035c}</Project>
+      <Name>PRHawkSkf.GitHubApiRepoInterfaces</Name>
+    </ProjectReference>
     <ProjectReference Include="..\PRHawkSkf.GitHubApiRepo\PRHawkSkf.GitHubApiRepo.csproj">
       <Project>{2cb67483-c3ad-4787-addb-8d9f37c22882}</Project>
       <Name>PRHawkSkf.GitHubApiRepo</Name>
@@ -130,6 +134,9 @@
       <Project>{956C2BBA-E732-45C7-87EC-F5D32D5BA0AC}</Project>
       <Name>PRHawkSkf</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

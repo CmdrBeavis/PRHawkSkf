@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
+
 using PRHawkSkf.Domain.Models;
 using PRHawkSkf.GitHubApiRepoInterfaces;
 
@@ -17,7 +16,6 @@ namespace PRHawkSkf.Services
 		private readonly IHttpClientAuthorizeConfigurator _httpClientAuthPrvdr;
 		private readonly IGitHubRepos _ghRepos;
 		private readonly IGitHubPullReqs _gitHubPullReqs;
-
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="GitHubApiCallServices"/> class.
@@ -49,9 +47,17 @@ namespace PRHawkSkf.Services
 			_gitHubPullReqs = gitHubPRs ?? throw new ArgumentNullException(nameof(gitHubPRs));
 		}
 
-
-		// TODO: IS this tested?
-
+		/// <summary>
+		/// Gets the public repository(s) of/by the specified username.
+		/// </summary>
+		/// <param name="ghUsername">
+		/// The GitHub username.
+		/// </param>
+		/// <returns>
+		/// A Task&lt;List&lt;GhUserRepo&gt;&gt;
+		/// </returns>
+		/// <exception cref="ArgumentNullException">ghUsername</exception>
+		/// <exception cref="Exception">Error creating HttpClient instance.</exception>
 		public async Task<List<GhUserRepo>> GetPublicGhUserReposByUsername(
 			string ghUsername)
 		{
@@ -63,7 +69,7 @@ namespace PRHawkSkf.Services
 			// Get the HttpClient
 			var httpClient = _httpClientProvider.GetHttpClientInstance();
 
-			// Set the Authentication stuff into said HttpClient instance
+			// Set the Authentication stuff into the HttpClient instance
 			// TODO: (?) read the u/p from the web.config
 			if (!_httpClientAuthPrvdr.AddBasicAuthorizationHeaderValue(
 				httpClient, 
@@ -73,11 +79,11 @@ namespace PRHawkSkf.Services
 				throw new Exception("Error creating HttpClient instance.");
 			}
 
-			// Call the 'repo' layer to make the actual call to GitHub, passing in the HttpClient instance
 			List<GhUserRepo> rawRepoData = null;
 
 			try
 			{
+				// Call the 'repo' layer to make the actual call to GitHub
 				rawRepoData = await _ghRepos.GetGitHubRepos(httpClient, ghUsername);
 			}
 			catch (HttpRequestException httpReqException)
@@ -86,6 +92,7 @@ namespace PRHawkSkf.Services
 					"*** Task<List<GhUserRepo>> GetPublicGhUserReposByUsername() EXCEPTION: ***\r\n" +
 					httpReqException.Message + "\r\n" +
 					httpReqException.StackTrace);
+				throw;
 			}
 			catch (Exception oEx)
 			{
@@ -93,17 +100,27 @@ namespace PRHawkSkf.Services
 				throw;
 			}
 
-			if (rawRepoData != null)
-			{
-				return rawRepoData;
-			}
-
-			return new List<GhUserRepo>();
+			return rawRepoData ?? new List<GhUserRepo>();
 		}
 
-
-		// TODO: IS this tested?
-
+		/// <summary>
+		/// Gets the open PRs for the specified user repository.
+		/// </summary>
+		/// <param name="ghUsername">
+		/// The username.
+		/// </param>
+		/// <param name="ghRepoName">
+		/// A string containing the name of the repository.
+		/// </param>
+		/// <returns>
+		/// A Task&lt;int&gt;
+		/// </returns>
+		/// <exception cref="ArgumentNullException">
+		/// ghUsername
+		/// or
+		/// ghRepoName
+		/// </exception>
+		/// <exception cref="Exception">Error adding authentication credentials to HttpClient instance.</exception>
 		public async Task<int> GetOpenPRsByGhUserRepo(
 			string ghUsername,
 			string ghRepoName)
@@ -144,6 +161,7 @@ namespace PRHawkSkf.Services
 					"*** Task<int> GetOpenPRsByGhUserRepo() EXCEPTION: ***\r\n" +
 					httpReqException.Message + "\r\n" +
 					httpReqException.StackTrace);
+				throw;
 			}
 			catch (Exception oEx)
 			{
@@ -153,6 +171,5 @@ namespace PRHawkSkf.Services
 
 			return result;
 		}
-		
 	}
 }

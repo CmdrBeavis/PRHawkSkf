@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+
 using PRHawkSkf.Domain.Models;
 using PRHawkSkf.Domain.ViewModels;
 
@@ -12,27 +13,33 @@ namespace PRHawkSkf.Services
 	{
 		private readonly IGitHubApiCallServices _ghApiCallServices;
 
-
+		/// <summary>
+		/// Initializes a new instance of the <see cref="GhUserReposServices"/> class.
+		/// </summary>
+		/// <param name="ghApiCallSvcs">The gh API call SVCS.</param>
+		/// <exception cref="ArgumentNullException">ghApiCallSvcs</exception>
 		public GhUserReposServices(
 			IGitHubApiCallServices ghApiCallSvcs)
 		{
 			_ghApiCallServices = ghApiCallSvcs ?? throw new ArgumentNullException(nameof(ghApiCallSvcs));
 		}
 
-
 		/// <summary>
-		/// Hydrates the GitHub user repositories display ViewModel.
+		/// Hydrates the GitHub user repositories/PR count display ViewModel.
 		/// </summary>
-		/// <param name="ghUsername">The gh username.</param>
-		///// <param name="repoList">The repo list.</param>
-		/// <param name="returnPrivateRepos">if set to <c>true</c> [return private repos].</param>
+		/// <param name="ghUsername">
+		/// The GitHub username.
+		/// </param>
+		/// <param name="returnPrivateRepos">
+		/// if set to <c>true</c> [include private repos in returned set],
+		/// else don't.
+		/// </param>
 		/// <returns>
 		/// An instance of the <see cref="GhUserReposDisplayVm"/> class, 
 		/// hydrated with the appropriate data.
 		/// </returns>
 		public async Task<GhUserReposDisplayVm> HydrateGhUserReposDisplayVm(
 			string ghUsername,
-			//List<GhUserRepo> repoList,
 			bool returnPrivateRepos = false)
 		{
 			var result = new GhUserReposDisplayVm
@@ -45,7 +52,7 @@ namespace PRHawkSkf.Services
 			List<GhUserRepo> ghReposData = 
 				await _ghApiCallServices.GetPublicGhUserReposByUsername(ghUsername);
 
-			// filter private repos?
+			// filter private repos per returnPrivateRepos value.
 			var filteredRepos = returnPrivateRepos ? ghReposData : ghReposData.Where(x => !x.@private).ToList();
 
 			if (filteredRepos.Count <= 0)
@@ -70,7 +77,5 @@ namespace PRHawkSkf.Services
 
 			return result;
 		}
-
-
 	}
 }

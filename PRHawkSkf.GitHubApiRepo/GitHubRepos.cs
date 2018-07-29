@@ -9,7 +9,6 @@ using Newtonsoft.Json;
 
 using PRHawkSkf.Domain.Models;
 using PRHawkSkf.GitHubApiRepoInterfaces;
-using PRHawkSkf.Services;
 
 
 namespace PRHawkSkf.GitHubApiRepo
@@ -26,7 +25,7 @@ namespace PRHawkSkf.GitHubApiRepo
 		/// <param name="httpClient">The HTTP client.</param>
 		/// <param name="ghUsername">The gh username.</param>
 		/// <returns>
-		/// A Task&lt;GhUserRepoCollection&gt;
+		/// A Task&lt;List&lt;GhUserRepo&gt;&gt;
 		/// </returns>
 		public async Task<List<GhUserRepo>> GetGitHubRepos(
 			HttpClient httpClient, 

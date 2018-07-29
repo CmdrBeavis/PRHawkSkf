@@ -55,7 +55,7 @@ namespace PRHawkSkf.Services
 			_httpClient.DefaultRequestHeaders.Add("Accept", "application/vnd.github.v3+json");
 
 			// https://stackoverflow.com/questions/2482715/the-server-committed-a-protocol-violation-section-responsestatusline-error
-			_httpClient.DefaultRequestHeaders.Add("User-Agent", "Anything");
+			_httpClient.DefaultRequestHeaders.Add("User-Agent", "PRHawkSkf");
 		}
 	}
 }

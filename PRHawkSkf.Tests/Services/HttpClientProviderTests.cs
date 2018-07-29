@@ -5,7 +5,6 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using Moq;
 
-using PRHawkSkf.GitHubApiRepo;
 using PRHawkSkf.Services;
 
 
@@ -73,5 +72,23 @@ namespace PRHawkSkf.Tests.Services
 			// Act
 			var returnedValue = client.GetHttpClientInstance();
 		}
+
+		// Make sure this header value has been put into the HttpClient
+		// _httpClient.DefaultRequestHeaders.Add("Accept", "application/vnd.github.v3+json");
+
+		[TestMethod]
+		public void NewHttpClientFromProvider_ShouldInclAcceptHeaderItem_ShouldPass()
+		{
+
+		}
+
+		// Make sure this header value has been put into the HttpClient
+		// _httpClient.DefaultRequestHeaders.Add("User-Agent", "PRHawkSkf");
+
+		public void NewHttpClientFromProvider_ShouldInclUserAgentHeaderItem_ShouldPass()
+		{
+
+		}
+
 	}
 }
