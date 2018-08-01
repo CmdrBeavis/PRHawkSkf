@@ -11,7 +11,7 @@ namespace PRHawkSkf.Tests.Controllers
 	public class HomeControllerTests
 	{
 		[TestMethod]
-		public void Index()
+		public void WhenIndexMethodCalled_NonNullViewResult_ShouldBeReturned()
 		{
 			// Arrange
 			HomeController controller = new HomeController();
@@ -24,7 +24,7 @@ namespace PRHawkSkf.Tests.Controllers
 		}
 
 		[TestMethod]
-		public void About()
+		public void WhenAboutMethodCalled_NonNullViewResult_ShouldBeReturned()
 		{
 			// Arrange
 			HomeController controller = new HomeController();
@@ -40,7 +40,7 @@ namespace PRHawkSkf.Tests.Controllers
 		}
 
 		[TestMethod]
-		public void Contact()
+		public void WhenContactMethodCalled_NonNullViewResult_ShouldBeReturned()
 		{
 			// Arrange
 			HomeController controller = new HomeController();
