@@ -8,7 +8,7 @@ using PRHawkSkf.Controllers;
 namespace PRHawkSkf.Tests.Controllers
 {
 	[TestClass]
-	public class HomeControllerTest
+	public class HomeControllerTests
 	{
 		[TestMethod]
 		public void Index()

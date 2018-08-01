@@ -1,4 +1,5 @@
 ﻿
+using System;
 using System.Net.Http;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -26,6 +27,62 @@ namespace PRHawkSkf.Tests.Services
 				// Assert
 				Assert.IsNotNull(newCfgratorInst);
 				Assert.IsInstanceOfType(newCfgratorInst, typeof(HttpClientAuthorizeConfigurator));
+			}
+
+			[TestMethod]
+			[ExpectedException(typeof(ArgumentNullException))]
+			public void HttpClientAuthCfg_IfReceivesNullHttpClient_ShouldThrow()
+			{
+				// Arrange
+				var mockBase64Codec = new Mock<IBase64Codec>();
+				var newCfgratorInst = new HttpClientAuthorizeConfigurator(mockBase64Codec.Object);
+
+				// Act
+				var result = newCfgratorInst.AddBasicAuthorizationHeaderValue(
+					null, "userName", "password");
+
+				// Assert
+				// should have thrown
+			}
+
+			[TestMethod]
+			[ExpectedException(typeof(ArgumentException))]
+			public void HttpClientAuthCfg_IfReceivesNullOrWsUsernameParam_ShouldThrow()
+			{
+				// Arrange
+				var mockBase64Codec = new Mock<IBase64Codec>();
+
+				// HttpClient doesn't have an interface, so using a real instance
+				var httpClient = new HttpClient();
+
+				var newCfgratorInst = new HttpClientAuthorizeConfigurator(mockBase64Codec.Object);
+
+				// Act
+				var result = newCfgratorInst.AddBasicAuthorizationHeaderValue(
+					httpClient, "", "password");
+
+				// Assert
+				// should have thrown
+			}
+
+			[TestMethod]
+			[ExpectedException(typeof(ArgumentException))]
+			public void HttpClientAuthCfg_IfReceivesNullOrWsPasswordParam_ShouldThrow()
+			{
+				// Arrange
+				var mockBase64Codec = new Mock<IBase64Codec>();
+
+				// HttpClient doesn't have an interface, so using a real instance
+				var httpClient = new HttpClient();
+
+				var newCfgratorInst = new HttpClientAuthorizeConfigurator(mockBase64Codec.Object);
+
+				// Act
+				var result = newCfgratorInst.AddBasicAuthorizationHeaderValue(
+					httpClient, "userName", " ");
+
+				// Assert
+				// should have thrown
 			}
 
 			[TestMethod]

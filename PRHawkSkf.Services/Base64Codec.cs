@@ -25,7 +25,7 @@ namespace PRHawkSkf.Services
 
 			if (string.IsNullOrWhiteSpace(dataToEncode))
 			{
-				return dataToEncode;
+				throw new ArgumentNullException(nameof(dataToEncode));
 			}
 
 			try
@@ -36,7 +36,6 @@ namespace PRHawkSkf.Services
 			}
 			catch (EncoderFallbackException eFbEx)
 			{
-				// TODO: At least put in a Trace.Writeline() and write to the event log
 				// in a 'real' app, proper logging should be put here.
 				Debug.WriteLine(eFbEx);
 
@@ -71,7 +70,7 @@ namespace PRHawkSkf.Services
 
 			if (string.IsNullOrWhiteSpace(dataToDecode))
 			{
-				return dataToDecode;
+				throw new ArgumentNullException(nameof(dataToDecode));
 			}
 
 			try
@@ -82,7 +81,6 @@ namespace PRHawkSkf.Services
 			}
 			catch (EncoderFallbackException eFbEx)
 			{
-				// TODO: At least put in a Trace.Writeline() and write to the event log
 				// in a 'real' app, proper logging should be put here.
 				Debug.WriteLine(eFbEx);
 

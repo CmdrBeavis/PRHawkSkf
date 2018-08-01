@@ -1,6 +1,7 @@
 ﻿using System;
+using System.Linq;
 using System.Net.Http;
-
+using System.Net.Http.Headers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using Moq;
@@ -79,15 +80,37 @@ namespace PRHawkSkf.Tests.Services
 		[TestMethod]
 		public void NewHttpClientFromProvider_ShouldInclAcceptHeaderItem_ShouldPass()
 		{
+			// Arrange
+			HttpClientProvider client = new HttpClientProvider(mockWebConfigReader.Object);
+			MediaTypeWithQualityHeaderValue expectedMediaType = 
+				new MediaTypeWithQualityHeaderValue("application/vnd.github.v3+json");
 
+			// Act
+			var returnedHttpClient = client.GetHttpClientInstance();
+			var returnedAcceptHdr = returnedHttpClient.DefaultRequestHeaders.Accept.FirstOrDefault();
+
+			// Assert
+			Assert.AreEqual(expectedMediaType, returnedAcceptHdr);
 		}
 
 		// Make sure this header value has been put into the HttpClient
 		// _httpClient.DefaultRequestHeaders.Add("User-Agent", "PRHawkSkf");
 
+		[TestMethod]
 		public void NewHttpClientFromProvider_ShouldInclUserAgentHeaderItem_ShouldPass()
 		{
+			// Arrange
+			HttpClientProvider client = new HttpClientProvider(mockWebConfigReader.Object);
 
+			var productInfo = new ProductHeaderValue("PRHawkSkf");
+			var expectedProductInfoHdrVal = new ProductInfoHeaderValue(productInfo);
+
+			// Act
+			var returnedHttpClient = client.GetHttpClientInstance();
+			var returnedAcceptHdr = returnedHttpClient.DefaultRequestHeaders.UserAgent.FirstOrDefault();
+
+			// Assert
+			Assert.AreEqual(expectedProductInfoHdrVal, returnedAcceptHdr);
 		}
 
 	}

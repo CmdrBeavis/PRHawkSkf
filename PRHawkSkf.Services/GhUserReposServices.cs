@@ -42,6 +42,11 @@ namespace PRHawkSkf.Services
 			string ghUsername,
 			bool returnPrivateRepos = false)
 		{
+			if (string.IsNullOrWhiteSpace(ghUsername))
+			{
+				throw new ArgumentNullException(nameof(ghUsername));
+			}
+
 			var result = new GhUserReposDisplayVm
 			{
 				Repositories = new List<RepoListItem>(),

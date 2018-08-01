@@ -80,7 +80,7 @@ namespace PRHawkSkf.Services
 			}
 			catch (Exception e)
 			{
-				// TODO: probably want real logging here in ACTUAL production code (Trace.Writeline might do in the meantime.)
+				// TODO: probably want real logging here in ACTUAL production code
 				Console.WriteLine(e);
 
 				throw;

@@ -1,4 +1,5 @@
-﻿using System.Text.RegularExpressions;
+﻿using System;
+using System.Text.RegularExpressions;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -19,6 +20,32 @@ namespace PRHawkSkf.Tests.Services
 			// Assert
 			Assert.IsNotNull(base64Codec);
 			Assert.IsInstanceOfType(base64Codec, typeof(Base64Codec));
+		}
+
+		[TestMethod]
+		[ExpectedException(typeof(ArgumentNullException))]
+		public void Base64CodecEncodeCall_WithNullOrWhiteSpParam_ShouldThrow()
+		{
+			// Arrange
+			var base64Codec = new Base64Codec();
+
+			// Act
+			var encodedText = base64Codec.Encode(" ");
+
+			// should have thrown
+		}
+
+		[TestMethod]
+		[ExpectedException(typeof(ArgumentNullException))]
+		public void Base64CodecDecodeCall_WithNullOrWhiteSpParam_ShouldThrow()
+		{
+			// Arrange
+			var base64Codec = new Base64Codec();
+
+			// Act
+			var encodedText = base64Codec.Decode(" ");
+
+			// should have thrown
 		}
 
 		[TestMethod]
