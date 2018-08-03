@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 using Newtonsoft.Json;
@@ -16,6 +13,25 @@ namespace PRHawkSkf.GitHubApiRepo
 {
 	public class GitHubPullReqs : IGitHubPullReqs
 	{
+		private readonly IGitHubApiRepoHelpers _gitHubApiRepoHelpers;
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="GitHubPullReqs"/> class.
+		/// </summary>
+		/// <param name="ghApiCallSvcs">
+		/// A concrete instance of any class that implements the
+		/// <see cref="IGitHubApiRepoHelpers"/> interface. Most typically an
+		/// instance of the <see cref="GitHubApiRepoHelpers"/> class.
+		/// </param>
+		/// <exception cref="ArgumentNullException">
+		/// Thrown if the <paramref name="ghApiCallSvcs"/> parameter is null.
+		/// </exception>
+		public GitHubPullReqs(
+			IGitHubApiRepoHelpers ghApiCallSvcs)
+		{
+			_gitHubApiRepoHelpers = ghApiCallSvcs ?? throw new ArgumentNullException(nameof(ghApiCallSvcs));
+		}
+
 		/// <summary>
 		/// Gets the specified GitHub repository's open Pull Request(s) count.
 		/// </summary>
@@ -44,7 +60,6 @@ namespace PRHawkSkf.GitHubApiRepo
 				int openPRCount = 0;
 				int lastPageNum = 0;
 				bool lastPageSet = false;
-				Regex regex = new Regex("\\&page=(\\d{1,3})");
 
 				do
 				{
@@ -57,44 +72,22 @@ namespace PRHawkSkf.GitHubApiRepo
 						dynamic dynPRs = JsonConvert.DeserializeObject(data);
 						openPRCount += dynPRs.Count;
 
-						// ParseLinkFromHeader would probably start here.
-
 						if (!lastPageSet)
 						{
-							var linkHeaderKvp = response.Headers.FirstOrDefault(q => q.Key.Equals("Link"));
-							var linkValues = linkHeaderKvp.Value?.ToList();
+							lastPageNum = _gitHubApiRepoHelpers.ParseLinkHeaderForLastPageNum(
+								response);
 
-							if (linkValues != null && linkValues.Any())
-							{
-								// first, split the link string on ','
-								var linkStrings = new List<string>(linkValues[0].Split(','));
-
-								// Now find the last page link and parse out the page number
-								var lastPageStr = linkStrings.FirstOrDefault(q => q.Contains("rel=\"last\""));
-
-								if (lastPageStr == null)
-								{
-									// NOT SURE WHAT TO DO HERE.
-									throw new Exception("keep the IDE|R# quiet for now.");
-								}
-
-								var lastPageNumMatch = regex.Match(lastPageStr);
-								lastPageNum = Convert.ToInt32(lastPageNumMatch.Groups[1].Value);
-
-								lastPageSet = true;
-							}
+							lastPageSet = lastPageNum >= 2;
 						}
-
-						// ParseLinkFromHeader would probably END here.
 					}
 					else
 					{
-						// TODO: Might want to do SOMETHING to handle this error
+						throw new Exception("The attempted call of the GitHub API apparently failed.");
 					}
 
-					//currentPage++;
+					currentPage++;
 					callUrl =
-						$"repos/{ghUsername}/{ghUserRepoName}/pulls?state=opened&page={currentPage++}";
+						$"repos/{ghUsername}/{ghUserRepoName}/pulls?state=opened&page={currentPage}";
 
 				} while (currentPage <= lastPageNum);
 

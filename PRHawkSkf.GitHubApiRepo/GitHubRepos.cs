@@ -19,6 +19,19 @@ namespace PRHawkSkf.GitHubApiRepo
 	/// </summary>
 	public class GitHubRepos : IGitHubRepos
 	{
+		private readonly IGitHubApiRepoHelpers _gitHubApiRepoHelpers;
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="GitHubRepos"/> class.
+		/// </summary>
+		/// <param name="ghApiCallSvcs">The gh API call SVCS.</param>
+		/// <exception cref="ArgumentNullException">ghApiCallSvcs</exception>
+		public GitHubRepos(
+			IGitHubApiRepoHelpers ghApiCallSvcs)
+		{
+			_gitHubApiRepoHelpers = ghApiCallSvcs ?? throw new ArgumentNullException(nameof(ghApiCallSvcs));
+		}
+
 		/// <summary>
 		/// Gets the git hub repos.
 		/// </summary>
@@ -33,22 +46,44 @@ namespace PRHawkSkf.GitHubApiRepo
 		{
 			try
 		    {
-				// TODO: handle 'pagenation'
-			    var callUrl =
-				    $"users/{ghUsername}/repos?page=1&per_page=50";
+			    var currentPage = 1;
+			    var callUrl = $"users/{ghUsername}/repos?page={currentPage}";
+			    var results = new List<GhUserRepo>();
+				int lastPageNum = 0;
+			    bool lastPageSet = false;
 
-				HttpResponseMessage response = await httpClient.GetAsync(callUrl).ConfigureAwait(false);
+			    do
+			    {
+				    HttpResponseMessage response = await httpClient.GetAsync(callUrl).ConfigureAwait(false);
 
-				if (response.IsSuccessStatusCode && (response.StatusCode == HttpStatusCode.OK))
-				{
-					var data = await response.Content.ReadAsStringAsync();
+				    if (response.IsSuccessStatusCode && (response.StatusCode == HttpStatusCode.OK))
+				    {
+					    var data = await response.Content.ReadAsStringAsync();
 
-					var results = JsonConvert.DeserializeObject<List<GhUserRepo>>(data);
+					    results.AddRange(JsonConvert.DeserializeObject<List<GhUserRepo>>(data));
 
-					return results;
-				}
+					    if (!lastPageSet)
+					    {
+						    lastPageNum = _gitHubApiRepoHelpers.ParseLinkHeaderForLastPageNum(
+							    response);
+
+						    lastPageSet = lastPageNum >= 2;
+					    }
+				    }
+				    else
+				    {
+					    throw new Exception("The attempted call of the GitHub API apparently failed.");
+				    }
+
+				    currentPage++;
+				    callUrl =
+					    $"users/{ghUsername}/repos?page={currentPage}";
+
+			    } while (currentPage <= lastPageNum);
+
+			    return results;
 			}
-		    catch (Exception oEx)
+			catch (Exception oEx)
 		    {
 			    Debug.WriteLine(
 					"*** Task<List<GhUserRepo>> GetGitHubRepos() EXCEPTION: ***\r\n" + 

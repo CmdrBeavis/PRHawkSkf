@@ -30,11 +30,12 @@ namespace PRHawkSkf
 			var clientProvider = new HttpClientProvider(webConfigReader);
 			container.Register<IHttpClientProvider>(() => clientProvider, Lifestyle.Scoped);
 
+			container.Register<IGitHubApiRepoHelpers, GitHubApiRepoHelpers>(Lifestyle.Scoped);
 			container.Register<IGitHubRepos, GitHubRepos>(Lifestyle.Scoped);
-			container.Register<IGitHubApiCallServices, GitHubApiCallServices>(Lifestyle.Scoped);
-
-			container.Register<IGhUserReposServices, GhUserReposServices>(Lifestyle.Scoped);
 			container.Register<IGitHubPullReqs, GitHubPullReqs>(Lifestyle.Scoped);
+
+			container.Register<IGitHubApiCallServices, GitHubApiCallServices>(Lifestyle.Scoped);
+			container.Register<IGhUserReposServices, GhUserReposServices>(Lifestyle.Scoped);
 
 			// This is an extension method from the [Simple Injector] integration package.
 			container.RegisterMvcControllers(Assembly.GetExecutingAssembly());

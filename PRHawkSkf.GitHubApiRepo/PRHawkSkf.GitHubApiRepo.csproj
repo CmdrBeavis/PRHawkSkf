@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GitHubApiRepoHelpers.cs" />
     <Compile Include="GitHubPullReqs.cs" />
     <Compile Include="GitHubRepos.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
