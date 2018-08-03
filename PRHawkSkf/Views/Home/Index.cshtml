@@ -3,19 +3,24 @@
 }
 
 <div class="jumbotron">
-    <h1>PRHawk SKF</h1>
-    <p class="lead">PRHawk SKF is my take on the ServiceNow 'take home coding test' Web application.</p>
+	<h1>PRHawk SKF</h1>
+
+	<div id="spinner" style="display:none;">
+		<img src="~/Content/images/ring-alt.gif" alt="Please wait while I retrieve the requested information..."/>
+	</div>
+
+	<p class="lead">PRHawk SKF is my take on the ServiceNow 'take home coding test' Web application.</p>
 	<p>
 		Enter a GitHub username below and click Go.
 	</p>
-	
-	@using (Html.BeginForm("Index", "User", null, FormMethod.Post, new {@id = "getChUsername", @class = "form-horizontal", role = "form"}))
+
+	@using (Html.BeginForm("Index", "User", null, FormMethod.Post, new { @id = "getChUsername", @class = "form-horizontal", role = "form" }))
 	{
 		@Html.AntiForgeryToken()
 
 		<div>
-			<input type="text" id="githubUsername" name="githubUsername" placeholder="GitHub username here"/>
-			<input type="submit" class="btn btn-primary" value="Go"/>
+			<input type="text" id="githubUsername" name="githubUsername" placeholder="GitHub username here" />
+			<input type="submit" class="btn btn-primary" id="goButton" value="Go" />
 		</div>
 	}
 
@@ -23,4 +28,5 @@
 
 @section Scripts {
 	@Scripts.Render("~/bundles/jqueryval")
+	<script src="~/Scripts/Home_Index.js"></script>
 }
