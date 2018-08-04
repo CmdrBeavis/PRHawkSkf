@@ -52,9 +52,9 @@ namespace PRHawkSkf.Domain.Models
 		public string labels_url { get; set; }
 		public string releases_url { get; set; }
 		public string deployments_url { get; set; }
-		public DateTime created_at { get; set; }
-		public DateTime updated_at { get; set; }
-		public DateTime pushed_at { get; set; }
+		public DateTime? created_at { get; set; }
+		public DateTime? updated_at { get; set; }
+		public DateTime? pushed_at { get; set; }
 		public string git_url { get; set; }
 		public string ssh_url { get; set; }
 		public string clone_url { get; set; }

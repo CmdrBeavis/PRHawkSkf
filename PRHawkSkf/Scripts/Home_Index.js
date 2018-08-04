@@ -13,7 +13,7 @@ function ShowWaitSpinner() {
 		message: $("#spinner")
 	});
 
-	setTimeout($.unblockUI, 120000);
+	setTimeout($.unblockUI, 500000);
 };
 
 $(document).ready(function() {
