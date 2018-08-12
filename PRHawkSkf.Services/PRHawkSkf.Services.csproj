@@ -43,11 +43,13 @@
     <Compile Include="Base64Codec.cs" />
     <Compile Include="GhUserReposServices.cs" />
     <Compile Include="GitHubApiCallServices.cs" />
+    <Compile Include="GitHubAPICredentialsReader.cs" />
     <Compile Include="HttpClientAuthorizeConfigurator.cs" />
     <Compile Include="HttpClientProvider.cs" />
     <Compile Include="IBase64Codec.cs" />
     <Compile Include="IGhUserReposServices.cs" />
     <Compile Include="IGitHubApiCallServices.cs" />
+    <Compile Include="IGitHubAPICredentialsReader.cs" />
     <Compile Include="IHttpClientAuthorizeConfigurator.cs" />
     <Compile Include="IHttpClientProvider.cs" />
     <Compile Include="IWebConfigReader.cs" />

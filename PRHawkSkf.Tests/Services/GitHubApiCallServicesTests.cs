@@ -12,11 +12,42 @@ using PRHawkSkf.Services;
 
 namespace PRHawkSkf.Tests.Services
 {
-
-
 	[TestClass]
 	public class GitHubApiCallServicesTests
 	{
+		private Mock<IGitHubAPICredentialsReader> mockCredentialsReader;
+
+		#region Additional test attributes
+
+		//
+		// You can use the following additional attributes as you write your tests:
+		//
+		// Use ClassInitialize to run code before running the first test in the class
+		//[ClassInitialize]
+		//public static void MyClassInitialize(TestContext testContext)
+		//{ }
+
+		// Use ClassCleanup to run code after all tests in a class have run
+		// [ClassCleanup()]
+		// public static void MyClassCleanup() { }
+		//
+		// Use TestInitialize to run code before running each test 
+		[TestInitialize()]
+		public void MyTestInitialize()
+		{
+			mockCredentialsReader = new Mock<IGitHubAPICredentialsReader>();
+
+			mockCredentialsReader.Setup(o => o.GetUsername()).Returns("username");
+			mockCredentialsReader.Setup(o => o.GetPassword()).Returns("password");
+		}
+
+		// Use TestCleanup to run code after each test has run
+		// [TestCleanup()]
+		// public void MyTestCleanup() { }
+		//
+
+		#endregion
+
 		[TestMethod]
 		public void InstantiationOf_GitHubApiCallServices_WithProperParameters_ShouldPass()
 		{
@@ -31,7 +62,8 @@ namespace PRHawkSkf.Tests.Services
 				mockHttpClientProvider.Object,
 				mockHCAuthConfigr.Object,
 				mockGHReposSvc.Object,
-				mockGHPRsSvc.Object);
+				mockGHPRsSvc.Object,
+				mockCredentialsReader.Object);
 
 			// Assert
 			Assert.IsNotNull(apiCallServices);
@@ -51,9 +83,11 @@ namespace PRHawkSkf.Tests.Services
 			// Act
 			GitHubApiCallServices apiCallServices = new GitHubApiCallServices(
 				mockHttpClientProvider.Object,
+				// ReSharper disable once ExpressionIsAlwaysNull
 				mockHCAuthConfigr,
 				mockGHReposSvc.Object,
-				mockGHPRsSvc.Object);
+				mockGHPRsSvc.Object,
+				mockCredentialsReader.Object);
 
 			// Assert
 			// Should throw, so nothing here.
@@ -91,7 +125,8 @@ namespace PRHawkSkf.Tests.Services
 				mockHttpClientProvider.Object,
 				mockHCAuthConfigr.Object,
 				mockGHReposSvc.Object,
-				mockGHPRsSvc.Object);
+				mockGHPRsSvc.Object,
+				mockCredentialsReader.Object);
 
 			var taskOfListOfGhUserRepos =
 				apiCallServices.GetPublicGhUserReposByUsername("github");
@@ -118,7 +153,8 @@ namespace PRHawkSkf.Tests.Services
 				mockHttpClientProvider.Object,
 				mockHCAuthConfigr.Object,
 				mockGHReposSvc.Object,
-				mockGHPRsSvc.Object);
+				mockGHPRsSvc.Object,
+				mockCredentialsReader.Object);
 
 			var taskOfListOfGhUserRepos =
 				await apiCallServices.GetPublicGhUserReposByUsername(" ");
@@ -157,7 +193,8 @@ namespace PRHawkSkf.Tests.Services
 				mockHttpClientProvider.Object,
 				mockHCAuthConfigr.Object,
 				mockGHReposSvc.Object,
-				mockGHPRsSvc.Object);
+				mockGHPRsSvc.Object,
+				mockCredentialsReader.Object);
 
 			var taskOfListOfGhUserRepos =
 				await apiCallServices.GetPublicGhUserReposByUsername("github");
@@ -196,7 +233,8 @@ namespace PRHawkSkf.Tests.Services
 				mockHttpClientProvider.Object,
 				mockHCAuthConfigr.Object,
 				mockGHReposSvc.Object,
-				mockGHPRsSvc.Object);
+				mockGHPRsSvc.Object,
+				mockCredentialsReader.Object);
 
 			var taskOfListOfGhUserRepos =
 				await apiCallServices.GetPublicGhUserReposByUsername("github");
@@ -225,7 +263,8 @@ namespace PRHawkSkf.Tests.Services
 				mockHttpClientProvider.Object,
 				mockHCAuthConfigr.Object,
 				mockGHReposSvc.Object,
-				mockGHPRsSvc.Object);
+				mockGHPRsSvc.Object,
+				mockCredentialsReader.Object);
 
 			var taskOfListOfGhUserRepos =
 				await apiCallServices.GetOpenPRsByGhUserRepo(" ", "NonNullValue");
@@ -248,7 +287,8 @@ namespace PRHawkSkf.Tests.Services
 				mockHttpClientProvider.Object,
 				mockHCAuthConfigr.Object,
 				mockGHReposSvc.Object,
-				mockGHPRsSvc.Object);
+				mockGHPRsSvc.Object,
+				mockCredentialsReader.Object);
 
 			var taskOfListOfGhUserRepos =
 				await apiCallServices.GetOpenPRsByGhUserRepo("NonNullValue", " ");
@@ -288,7 +328,8 @@ namespace PRHawkSkf.Tests.Services
 				mockHttpClientProvider.Object,
 				mockHCAuthConfigr.Object,
 				mockGHReposSvc.Object,
-				mockGHPRsSvc.Object);
+				mockGHPRsSvc.Object,
+				mockCredentialsReader.Object);
 
 			var methodCallResultTask = apiCallServices.GetOpenPRsByGhUserRepo("username", "TestGhRepoName");
 			var methodCallResult = methodCallResultTask.Result;
@@ -330,7 +371,8 @@ namespace PRHawkSkf.Tests.Services
 				mockHttpClientProvider.Object,
 				mockHCAuthConfigr.Object,
 				mockGHReposSvc.Object,
-				mockGHPRsSvc.Object);
+				mockGHPRsSvc.Object,
+				mockCredentialsReader.Object);
 
 			var methodCallResultTask = 
 				await apiCallServices.GetOpenPRsByGhUserRepo("username", "TestGhRepoName");
@@ -370,18 +412,13 @@ namespace PRHawkSkf.Tests.Services
 				mockHttpClientProvider.Object,
 				mockHCAuthConfigr.Object,
 				mockGHReposSvc.Object,
-				mockGHPRsSvc.Object);
+				mockGHPRsSvc.Object,
+				mockCredentialsReader.Object);
 
 			var methodCallResultTask =
 				await apiCallServices.GetOpenPRsByGhUserRepo("username", "TestGhRepoName");
 
 			// should have thrown
 		}
-
-
-
-
-
-
 	}
 }

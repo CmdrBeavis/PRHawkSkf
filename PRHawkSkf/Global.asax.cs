@@ -30,6 +30,7 @@ namespace PRHawkSkf
 			var clientProvider = new HttpClientProvider(webConfigReader);
 			container.Register<IHttpClientProvider>(() => clientProvider, Lifestyle.Scoped);
 
+			container.Register<IGitHubAPICredentialsReader, GitHubAPICredentialsReader>(Lifestyle.Scoped);
 			container.Register<IGitHubApiRepoHelpers, GitHubApiRepoHelpers>(Lifestyle.Scoped);
 			container.Register<IGitHubRepos, GitHubRepos>(Lifestyle.Scoped);
 			container.Register<IGitHubPullReqs, GitHubPullReqs>(Lifestyle.Scoped);

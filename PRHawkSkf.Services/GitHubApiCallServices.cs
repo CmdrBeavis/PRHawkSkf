@@ -18,6 +18,7 @@ namespace PRHawkSkf.Services
 		private readonly IHttpClientAuthorizeConfigurator _httpClientAuthPrvdr;
 		private readonly IGitHubRepos _ghRepos;
 		private readonly IGitHubPullReqs _gitHubPullReqs;
+		private readonly IGitHubAPICredentialsReader _apiCredentialsReader;
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="GitHubApiCallServices"/> class.
@@ -34,6 +35,9 @@ namespace PRHawkSkf.Services
 		/// <param name="gitHubPRs">
 		/// IGitHubPullReqs
 		/// </param>
+		/// <param name="apiCredentialsReader">
+		/// IGitHubAPICredentialsReader
+		/// </param>
 		/// <exception cref="System.ArgumentNullException">
 		/// Thrown if the <paramref name="ghReposInst"/> parameter is null.
 		/// </exception>
@@ -41,12 +45,15 @@ namespace PRHawkSkf.Services
 			IHttpClientProvider httpClientProvider,
 			IHttpClientAuthorizeConfigurator hcac,
 			IGitHubRepos ghReposInst,
-			IGitHubPullReqs gitHubPRs)
+			IGitHubPullReqs gitHubPRs,
+			IGitHubAPICredentialsReader apiCredentialsReader)
 		{
 			_httpClientProvider = httpClientProvider ?? throw new ArgumentNullException(nameof(ghReposInst));
 			_httpClientAuthPrvdr = hcac ?? throw new ArgumentNullException(nameof(ghReposInst));
 			_ghRepos = ghReposInst ?? throw new ArgumentNullException(nameof(ghReposInst));
 			_gitHubPullReqs = gitHubPRs ?? throw new ArgumentNullException(nameof(gitHubPRs));
+			_apiCredentialsReader =
+				apiCredentialsReader ?? throw new ArgumentNullException(nameof(apiCredentialsReader));
 		}
 
 		/// <summary>
@@ -72,11 +79,10 @@ namespace PRHawkSkf.Services
 			var httpClient = _httpClientProvider.GetHttpClientInstance();
 
 			// Set the Authentication stuff into the HttpClient instance
-			// TODO: (?) read the u/p from the web.config
 			if (!_httpClientAuthPrvdr.AddBasicAuthorizationHeaderValue(
-				httpClient, 
-				"snkirklandinterview", 
-				"99036c318413ae379983014b2eeae395b7be14b0"))
+				httpClient,
+				_apiCredentialsReader.GetUsername(),
+				_apiCredentialsReader.GetPassword()))
 			{
 				throw new Exception("Error creating HttpClient instance.");
 			}
@@ -143,11 +149,10 @@ namespace PRHawkSkf.Services
 			var httpClient = _httpClientProvider.GetHttpClientInstance();
 
 			// Set the Authentication stuff into HttpClient instance
-			// TODO: (?) read the u/p from the web.config
 			if (!_httpClientAuthPrvdr.AddBasicAuthorizationHeaderValue(
 				httpClient,
-				"snkirklandinterview",
-				"99036c318413ae379983014b2eeae395b7be14b0"))
+				_apiCredentialsReader.GetUsername(),
+				_apiCredentialsReader.GetPassword()))
 			{
 				throw new Exception("Error adding authentication credentials to HttpClient instance.");
 			}

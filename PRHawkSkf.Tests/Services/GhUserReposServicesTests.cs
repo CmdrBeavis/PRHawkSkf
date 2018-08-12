@@ -20,6 +20,7 @@ namespace PRHawkSkf.Tests.Services
 		private Mock<IGitHubRepos> mockGHReposSvc;
 		private Mock<IGitHubPullReqs> mockGHPRsSvc;
 		private GitHubApiCallServices apiCallServices;
+		private Mock<IGitHubAPICredentialsReader> mockCredentialsReader;
 
 		#region Additional test attributes
 
@@ -63,11 +64,16 @@ namespace PRHawkSkf.Tests.Services
 
 			mockGHPRsSvc = new Mock<IGitHubPullReqs>();
 
+			mockCredentialsReader = new Mock<IGitHubAPICredentialsReader>();
+			mockCredentialsReader.Setup(o => o.GetUsername()).Returns("username");
+			mockCredentialsReader.Setup(o => o.GetPassword()).Returns("password");
+
 			apiCallServices = new GitHubApiCallServices(
 				mockHttpClientProvider.Object,
 				mockHCAuthConfigr.Object,
 				mockGHReposSvc.Object,
-				mockGHPRsSvc.Object);
+				mockGHPRsSvc.Object,
+				mockCredentialsReader.Object);
 		}
 
 		// Use TestCleanup to run code after each test has run
@@ -161,7 +167,8 @@ namespace PRHawkSkf.Tests.Services
 				mockHttpClientProvider.Object,
 				mockHCAuthConfigr.Object,
 				mockGHReposSvc.Object,
-				mockGHPRsSvc.Object);
+				mockGHPRsSvc.Object,
+				mockCredentialsReader.Object);
 
 			var ghUserReposSvcs = new GhUserReposServices(apiCallServices);
 
