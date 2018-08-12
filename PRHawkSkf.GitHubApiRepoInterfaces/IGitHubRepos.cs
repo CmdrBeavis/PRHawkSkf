@@ -9,6 +9,6 @@ namespace PRHawkSkf.GitHubApiRepoInterfaces
 {
 	public interface IGitHubRepos
 	{
-		Task<List<GhUserRepo>> GetGitHubRepos(HttpClient httpClient, string ghUsername);
+		Task<List<GhUserRepo>> GetGitHubReposAsync(HttpClient httpClient, string ghUsername);
 	}
 }

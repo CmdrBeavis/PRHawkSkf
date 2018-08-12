@@ -48,7 +48,7 @@ namespace PRHawkSkf.GitHubApiRepo
 		/// <returns>
 		/// A Task&lt;int&gt;
 		/// </returns>
-		public async Task<int> GetGitHubRepoOpenPRCount(
+		public async Task<int> GetGitHubRepoOpenPRCountAsync(
 			HttpClient httpClient,
 			string ghUsername,
 			string ghUserRepoName)
@@ -97,7 +97,7 @@ namespace PRHawkSkf.GitHubApiRepo
 			{
 				var httpClientStringRep = httpClient == null ? "{null}" : "httpClient";
 				Debug.WriteLine(
-					$"async Task<int> GetGitHubRepoOpenPRCount(httpClient: {httpClientStringRep}, \r\n\t" +
+					$"async Task<int> GetGitHubRepoOpenPRCountAsync(httpClient: {httpClientStringRep}, \r\n\t" +
 					$"ghUsername: {ghUsername}, ghUserRepoName: { ghUserRepoName}) EXCEPTION:\r\n" +
 					oEx.Message + "\n\r" + oEx.StackTrace);
 			}

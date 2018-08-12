@@ -76,11 +76,11 @@ namespace PRHawkSkf.Tests.Services
 
 			var mockGHReposSvc = new Mock<IGitHubRepos>();
 
-			// will be calling ghRepos.GetGitHubRepos(httpClient, ghUsername);
+			// will be calling ghRepos.GetGitHubReposAsync(httpClient, ghUsername);
 			// The method will return an empty collection if there are any 
 			// problems, or no public repos are found, so set it up to return
 			// a List containing a single item.
-			mockGHReposSvc.Setup(o => o.GetGitHubRepos(
+			mockGHReposSvc.Setup(o => o.GetGitHubReposAsync(
 				It.IsAny<HttpClient>(),
 				It.IsAny<string>())).ReturnsAsync(() => new List<GhUserRepo> {new GhUserRepo()});
 
@@ -142,11 +142,11 @@ namespace PRHawkSkf.Tests.Services
 
 			var mockGHReposSvc = new Mock<IGitHubRepos>();
 
-			// will be calling ghRepos.GetGitHubRepos(httpClient, ghUsername);
+			// will be calling ghRepos.GetGitHubReposAsync(httpClient, ghUsername);
 			// The method will return an empty collection if there are any 
 			// problems, or no public repos are found, so set it up to return
 			// a List containing a single item.
-			mockGHReposSvc.Setup(o => o.GetGitHubRepos(
+			mockGHReposSvc.Setup(o => o.GetGitHubReposAsync(
 				It.IsAny<HttpClient>(),
 				It.IsAny<string>())).ThrowsAsync(new HttpRequestException());
 
@@ -181,11 +181,11 @@ namespace PRHawkSkf.Tests.Services
 
 			var mockGHReposSvc = new Mock<IGitHubRepos>();
 
-			// will be calling ghRepos.GetGitHubRepos(httpClient, ghUsername);
+			// will be calling ghRepos.GetGitHubReposAsync(httpClient, ghUsername);
 			// The method will return an empty collection if there are any 
 			// problems, or no public repos are found, so set it up to return
 			// a List containing a single item.
-			mockGHReposSvc.Setup(o => o.GetGitHubRepos(
+			mockGHReposSvc.Setup(o => o.GetGitHubReposAsync(
 				It.IsAny<HttpClient>(),
 				It.IsAny<string>())).ThrowsAsync(new Exception());
 
@@ -274,10 +274,10 @@ namespace PRHawkSkf.Tests.Services
 			var mockGHPRsSvc = new Mock<IGitHubPullReqs>();
 
 			// The apiCallServices.GetOpenPRsByGhUserRepo() method calls 
-			// async Task<int> GetGitHubRepoOpenPRCount(HttpClient, string, string)
+			// async Task<int> GetGitHubRepoOpenPRCountAsync(HttpClient, string, string)
 			// which is the method that actually makes the GitHub API call, 
 			// so it definitely needs to be mocked out.
-			mockGHPRsSvc.Setup(o => o.GetGitHubRepoOpenPRCount(
+			mockGHPRsSvc.Setup(o => o.GetGitHubRepoOpenPRCountAsync(
 				It.IsAny<HttpClient>(),
 				It.IsAny<string>(),
 				It.IsAny<string>()
@@ -316,10 +316,10 @@ namespace PRHawkSkf.Tests.Services
 			var mockGHPRsSvc = new Mock<IGitHubPullReqs>();
 
 			// The apiCallServices.GetOpenPRsByGhUserRepo() method calls 
-			// async Task<int> GetGitHubRepoOpenPRCount(HttpClient, string, string)
+			// async Task<int> GetGitHubRepoOpenPRCountAsync(HttpClient, string, string)
 			// which is the method that actually makes the GitHub API call, 
 			// so it definitely needs to be mocked out.
-			mockGHPRsSvc.Setup(o => o.GetGitHubRepoOpenPRCount(
+			mockGHPRsSvc.Setup(o => o.GetGitHubRepoOpenPRCountAsync(
 				It.IsAny<HttpClient>(),
 				It.IsAny<string>(),
 				It.IsAny<string>()
@@ -356,10 +356,10 @@ namespace PRHawkSkf.Tests.Services
 			var mockGHPRsSvc = new Mock<IGitHubPullReqs>();
 
 			// The apiCallServices.GetOpenPRsByGhUserRepo() method calls 
-			// async Task<int> GetGitHubRepoOpenPRCount(HttpClient, string, string)
+			// async Task<int> GetGitHubRepoOpenPRCountAsync(HttpClient, string, string)
 			// which is the method that actually makes the GitHub API call, 
 			// so it definitely needs to be mocked out.
-			mockGHPRsSvc.Setup(o => o.GetGitHubRepoOpenPRCount(
+			mockGHPRsSvc.Setup(o => o.GetGitHubRepoOpenPRCountAsync(
 				It.IsAny<HttpClient>(),
 				It.IsAny<string>(),
 				It.IsAny<string>()

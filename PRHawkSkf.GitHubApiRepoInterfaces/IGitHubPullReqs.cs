@@ -7,7 +7,7 @@ namespace PRHawkSkf.GitHubApiRepoInterfaces
 {
 	public interface IGitHubPullReqs
 	{
-		Task<int> GetGitHubRepoOpenPRCount(
+		Task<int> GetGitHubRepoOpenPRCountAsync(
 			HttpClient httpClient,
 			string ghUsername,
 			string ghUserRepoName);

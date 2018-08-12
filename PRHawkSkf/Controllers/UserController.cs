@@ -45,7 +45,7 @@ namespace PRHawkSkf.Controllers
 		    try
 		    {
 			    viewModel =
-				    await _ghUserReposServices.HydrateGhUserReposDisplayVm(githubUsername);
+				    await _ghUserReposServices.HydrateGhUserReposDisplayVmAsync(githubUsername);
 		    }
 			catch (Exception oEx)
 		    {

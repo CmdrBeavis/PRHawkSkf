@@ -40,7 +40,7 @@ namespace PRHawkSkf.GitHubApiRepo
 		/// <returns>
 		/// A Task&lt;List&lt;GhUserRepo&gt;&gt;
 		/// </returns>
-		public async Task<List<GhUserRepo>> GetGitHubRepos(
+		public async Task<List<GhUserRepo>> GetGitHubReposAsync(
 			HttpClient httpClient, 
 			string ghUsername)
 		{
@@ -86,7 +86,7 @@ namespace PRHawkSkf.GitHubApiRepo
 			catch (Exception oEx)
 		    {
 			    Debug.WriteLine(
-					"*** Task<List<GhUserRepo>> GetGitHubRepos() EXCEPTION: ***\r\n" + 
+					"*** Task<List<GhUserRepo>> GetGitHubReposAsync() EXCEPTION: ***\r\n" + 
 				    oEx.Message + "\n\r" + oEx.StackTrace);
 		    }
 

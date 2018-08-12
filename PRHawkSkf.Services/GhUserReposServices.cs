@@ -38,7 +38,7 @@ namespace PRHawkSkf.Services
 		/// An instance of the <see cref="GhUserReposDisplayVm"/> class, 
 		/// hydrated with the appropriate data.
 		/// </returns>
-		public async Task<GhUserReposDisplayVm> HydrateGhUserReposDisplayVm(
+		public async Task<GhUserReposDisplayVm> HydrateGhUserReposDisplayVmAsync(
 			string ghUsername,
 			bool returnPrivateRepos = false)
 		{

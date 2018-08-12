@@ -86,7 +86,7 @@ namespace PRHawkSkf.Services
 			try
 			{
 				// Call the 'repo' layer to make the actual call to GitHub
-				rawRepoData = await _ghRepos.GetGitHubRepos(httpClient, ghUsername);
+				rawRepoData = await _ghRepos.GetGitHubReposAsync(httpClient, ghUsername);
 			}
 			catch (HttpRequestException httpReqException)
 			{
@@ -154,7 +154,7 @@ namespace PRHawkSkf.Services
 
 			try
 			{
-				result = await _gitHubPullReqs.GetGitHubRepoOpenPRCount(
+				result = await _gitHubPullReqs.GetGitHubRepoOpenPRCountAsync(
 					httpClient, ghUsername, ghRepoName);
 			}
 			catch (HttpRequestException httpReqException)

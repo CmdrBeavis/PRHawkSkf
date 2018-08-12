@@ -50,7 +50,7 @@ namespace PRHawkSkf.Tests.Controllers
 			string receivedExceptionMessage = "";
 
 			var mockGhUserReposSvcs = new Mock<IGhUserReposServices>();
-			mockGhUserReposSvcs.Setup(o => o.HydrateGhUserReposDisplayVm(
+			mockGhUserReposSvcs.Setup(o => o.HydrateGhUserReposDisplayVmAsync(
 				It.IsAny<string>(),
 				It.IsAny<bool>())).ThrowsAsync(new Exception(expectedExceptionMessage));
 

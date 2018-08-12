@@ -9,7 +9,7 @@ namespace PRHawkSkf.Services
 {
 	public interface IGhUserReposServices
 	{
-		Task<GhUserReposDisplayVm> HydrateGhUserReposDisplayVm(
+		Task<GhUserReposDisplayVm> HydrateGhUserReposDisplayVmAsync(
 			string ghUsername,
 			//List<GhUserRepo> repoList,
 			bool returnPrivateRepos = false);

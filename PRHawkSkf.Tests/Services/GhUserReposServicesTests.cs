@@ -49,10 +49,10 @@ namespace PRHawkSkf.Tests.Services
 
 			mockGHReposSvc = new Mock<IGitHubRepos>();
 
-			// The HydrateGhUserReposDisplayVm method is going to call the
+			// The HydrateGhUserReposDisplayVmAsync method is going to call the
 			// following, so I need a mocked version in order to test the
 			// 'private filter' functionality
-			mockGHReposSvc.Setup(o => o.GetGitHubRepos(
+			mockGHReposSvc.Setup(o => o.GetGitHubReposAsync(
 				It.IsAny<HttpClient>(),
 				It.IsAny<string>())).ReturnsAsync(() => new List<GhUserRepo>
 			{
@@ -111,7 +111,7 @@ namespace PRHawkSkf.Tests.Services
 
 			// Act
 			var classInstance = new GhUserReposServices(mockedApiCallServices.Object);
-			var callResult = await classInstance.HydrateGhUserReposDisplayVm(" ");
+			var callResult = await classInstance.HydrateGhUserReposDisplayVmAsync(" ");
 
 			// Assert
 			// should have thrown
@@ -125,7 +125,7 @@ namespace PRHawkSkf.Tests.Services
 
 			// Act
 			GhUserReposDisplayVm callResult =
-				await ghUserReposSvcs.HydrateGhUserReposDisplayVm("username");
+				await ghUserReposSvcs.HydrateGhUserReposDisplayVmAsync("username");
 
 			// if 'returnPrivateRepos' is false, I should get 2 back
 			Assert.AreEqual(2, callResult.Repositories.Count);
@@ -139,7 +139,7 @@ namespace PRHawkSkf.Tests.Services
 
 			// Act
 			GhUserReposDisplayVm callResult =
-				await ghUserReposSvcs.HydrateGhUserReposDisplayVm("username", true);
+				await ghUserReposSvcs.HydrateGhUserReposDisplayVmAsync("username", true);
 
 			// if 'returnPrivateRepos' is true, I should get 3 back
 			Assert.AreEqual(3, callResult.Repositories.Count);
@@ -149,7 +149,7 @@ namespace PRHawkSkf.Tests.Services
 		public async Task HydrateGhUserReposDisplayVm_IfNoReposAfterFilter_ShouldGetSimplyInitdRetClass()
 		{
 			// Arrange
-			mockGHReposSvc.Setup(o => o.GetGitHubRepos(
+			mockGHReposSvc.Setup(o => o.GetGitHubReposAsync(
 				It.IsAny<HttpClient>(),
 				It.IsAny<string>())).ReturnsAsync(() => new List<GhUserRepo>
 			{
@@ -167,7 +167,7 @@ namespace PRHawkSkf.Tests.Services
 
 			// Act
 			GhUserReposDisplayVm callResult =
-				await ghUserReposSvcs.HydrateGhUserReposDisplayVm("username");
+				await ghUserReposSvcs.HydrateGhUserReposDisplayVmAsync("username");
 
 			Assert.IsInstanceOfType(callResult, typeof(GhUserReposDisplayVm));
 			Assert.AreEqual("username", callResult.GitHubUsername);
@@ -184,7 +184,7 @@ namespace PRHawkSkf.Tests.Services
 
 			// Act
 			GhUserReposDisplayVm callResult =
-				await ghUserReposSvcs.HydrateGhUserReposDisplayVm("cmdrbeavis");
+				await ghUserReposSvcs.HydrateGhUserReposDisplayVmAsync("cmdrbeavis");
 
 			// Assert
 			Assert.IsInstanceOfType(callResult, typeof(GhUserReposDisplayVm));
